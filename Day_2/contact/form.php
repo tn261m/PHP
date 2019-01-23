@@ -1,11 +1,10 @@
-﻿<?php
+﻿<?php // PHP,開始タグ(開始タグ~終了タグに囲まれている箇所以外は,PHPに無視される)
 /*
- * ファイルパス：C:|Library|WebServer|Docunents\PHP\Day_2\contact\form.php
- * ファイル名：form.php
- * アクセスURL：http://localhost/PHP/Day_2/contact/form.php
+ * http://localhost/PHP/Day_2/contact/form.php
+ * C(HD):|Library|WebServer|Docunents\PHP\Day_2\contact\form.php
  *
- * 今回の学習内容
- * ・フローチャート
+ * [ 今回の学習内容 ]
+ *
  * 1．POSTがあった時とない時、POSTを受け取る変数の用意、チェック
  * 2．エラーメッセージの用意と表示
  * 3．formへの変数の用意
@@ -15,9 +14,8 @@
  * ・インデント
  * ・変数と命名
  * ・if構文、三項演算子
- * ・and(&&) or(||) 構文
- * ・スーパーグローバル変数(定義済みの変数)
- * 　$_POST(HTTP POST変数)、$_GET(HTTP GET変数)、$_FILES(HTTP ファイルアップロード変数)など
+ * ・and(&&) or (||) 構文
+ * ・スーパーグローバル変数(PHPによって,定義済みの変数) [ $GLOBALS、$_SERVER、$_GET、$_POST、$_FILES、$_COOKIE、$_SESSION、$_REQUEST、$_ENV ]
  * ・空(存在はしているが中身が空っぽ)と、Null(存在すらしていない)の違い
  */
 
@@ -49,7 +47,7 @@ $err_msg2 = '';
 // var_dump( isset( $x ) );
 // var_dump( isset( $y ) );
 
-$family_name = (isset($_POST['family_name']) === true) ? $_POST['family_name'] : '';
+$family_name = (isset($_POST['family_name']) === true) ? $_POST['family_name'] : ''; // isset: 存在するならtrue,しないなら,falseを返す
 $first_name = (isset($_POST['first_name']) === true) ? $_POST['first_name'] : '';
 
 // PHP5.3以降はこんな書き方もある↓(配列はダメ！変数のみ)
@@ -70,18 +68,22 @@ if (isset($_POST['send']) === true) {
         exit('this task stop!');
     }
 }
-?>
+?> <!-- PHP,終了タグ  -->
 
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<html> <!-- HTML文書の宣言 -->
+    <head> <!-- ヘッダ情報() -->
+        <!-- http-equiv 属性 を指定することで,文書の扱いや処理を指定できる -->
+        <!-- http-equiv に content-type を指定し,その content に text/html; charset=utf-8 をあわせて指定することで,文書の文字コードを指定している -->
+        <!-- text/html:HTMLファイル , charset:文字コードを指定する際に使用する属性 , utf-8:文字コードの種類 -->
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/> <!-- 文書に関する情報（メタ情報）を指定して, ブラウザに知らせる -->
         <title>お問い合わせフォーム</title>
     </head>
     <body>
-  	<form method="post" action="">
-    		氏：<input type="text" name="family_name" value="<?php echo $family_name; ?>" />
-        <?php echo $err_msg1; ?><br> 名：<input type="text" name="first_name" value="<?php echo $first_name; ?>" />
-        <?php echo $err_msg2; ?><br> <input type="submit" name="send" value="クリック" />
-  	</form>
+      	<form method="post" action="form.php"> <!-- 送信フォームの作成(タグ) , method(属性):送信方法の指定 , action(属性):送信先プログラムの指定 -->
+            <!-- echo: 1つ以上の文字列を出力する -->
+        		氏：<input type="text" name="family_name" value="<?php echo $family_name; ?>"/> <?php echo $err_msg1; ?> <br>
+            名：<input type="text" name="first_name" value="<?php echo $first_name; ?>"/> <?php echo $err_msg2; ?> <br>
+            <input type="submit" name="send" value="クリック" />
+      	</form>
     </body>
 </html>

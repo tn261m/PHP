@@ -17,8 +17,8 @@ if (isset($_POST['send']) === true) {
     if ($name !== '' && $comment !== '') {
 
         $fp = fopen('data2.txt', 'a');
-        if (flock($fp, LOCK_EX) === true) {
-            fwrite($fp, $name . "\t" . $comment . "\n");
+        if (flock($fp, LOCK_EX) === true) { // 書込みできる場合trueを返す
+            fwrite($fp, $name . "\t" . $comment . "\n"); // ¥t: 水平タブ(スペース), ¥n: 改行
             flock($fp, LOCK_UN);
         }
     } else {
@@ -31,11 +31,11 @@ $fp = fopen('data2.txt', 'r');
 $lineArray3 = [];
 while ($res = fgets($fp)) {
     // 一行の書き込みを配列に分割
-    $lineArray = explode("\t", $res);
+    $lineArray = explode("\t", $res); // 水平タブで文字列ごとに区切って配列にする
     // 配列の個々の部分にアクセス　echo $lineArray[0];
     // 配列を連想配列にする。ラベル付き
     $lineArray2 = [
-        'name' => $lineArray[0],
+        'name' => $lineArray[0], // nameというラベルをつける
         'comment' => $lineArray[1]
     ];
 
@@ -54,13 +54,13 @@ fclose($fp);
 <body>
 	<form method="post" action="">
 		名前 <input type="text" name="name" value="" /> コメント
-		<textarea name="comment" rows="4" cols="20"></textarea>
+		<textarea name="comment" rows="4" cols="20"></textarea> <!-- rows: 行数, cols: 20文字 -->
 		<input type="submit" name="send" value="書き込む" />
 	</form>
 	<!-- ここに、書き込まれたデータを表示する -->
 <?php
 //while_foreach_forのforを説明した後、foreachを説明
-foreach($lineArray3 as $value ){
+foreach($lineArray3 as $value ){ // $lineArray3の中身を「それぞれ順番に」$valueという変数に入れて
     //var_dump($value);
     echo "名前 :"     . $value["name"]    . "<br>";
     echo "コメント：" . $value["comment"] . "<br><br>";

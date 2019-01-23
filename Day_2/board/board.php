@@ -21,11 +21,13 @@ $flg = true ;
 $count =0;
 while( $flg === true  ) {
     $res = fgets( $fp );
-    if( $res === false ) $flg = false;
+    if( $res === false ) {
+        $flg = false;
+    }
     //↓$data = $data(今までの書き込み全て) + $res
     //  $a . $b 結合
 
-    $data .= $res;
+    $data .= $res; //$res 中身消えるから
     $count++;
     if( $count % 2 === 0 ) $data .= '<br>';
 
@@ -48,7 +50,7 @@ if ( isset( $_POST['send'] ) === true ){
         //追加書き(追記／後ろに書き込み)の場合モードはa、新規の上書きはw
         $fp = fopen( 'data.txt', 'a' );
         //LOCK_EX：排他的ロック、LOCK_UN：ロック解除
-        if ( flock( $fp, LOCK_EX ) === true ) {
+        if ( flock( $fp, LOCK_EX ) === true ) { // 同時アクセスの衝突によってデータの消失を防ぐ為
             fwrite( $fp, $name . "\n" . $comment . "\n" );
             flock( $fp, LOCK_UN );
         }
